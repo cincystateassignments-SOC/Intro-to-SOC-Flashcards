@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Exam-focused flash cards and practice questions for SOC 105: Introduction to Sociology.">
+  <meta name="theme-color" content="#0b5d3b">
+  <title>SOC 105 Study Center</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b5d3b'/%3E%3Ccircle cx='21' cy='23' r='8' fill='%23fff'/%3E%3Ccircle cx='43' cy='23' r='8' fill='%23f2c14e'/%3E%3Cpath d='M11 49c1-10 7-15 16-15s15 5 16 15' fill='none' stroke='%23fff' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M35 49c1-7 5-11 12-11 3 0 6 1 8 3' fill='none' stroke='%23f2c14e' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#study-card">Skip to study card</a>
+
+  <header class="site-header">
+    <div class="brand-lockup">
+      <div class="brand-mark" aria-hidden="true">SOC</div>
+      <div>
+        <p class="eyebrow">Introduction to Sociology</p>
+        <h1>SOC 105 Study Center</h1>
+      </div>
+    </div>
+    <button id="reset-progress" class="quiet-button" type="button">Reset progress</button>
+  </header>
+
+  <main>
+    <section class="control-panel" aria-labelledby="study-options-heading">
+      <div class="control-heading">
+        <div>
+          <p class="eyebrow">Build your study session</p>
+          <h2 id="study-options-heading">Choose an exam and study mode</h2>
+        </div>
+        <div id="overall-progress" class="overall-progress" aria-live="polite"></div>
+      </div>
+
+      <div class="exam-tabs" role="tablist" aria-label="Unit exam">
+        <button class="exam-tab active" role="tab" aria-selected="true" data-exam="1" type="button">
+          <span>Exam 1</span><small>Foundations &amp; Research</small>
+        </button>
+        <button class="exam-tab" role="tab" aria-selected="false" data-exam="2" type="button">
+          <span>Exam 2</span><small>Culture &amp; Socialization</small>
+        </button>
+        <button class="exam-tab" role="tab" aria-selected="false" data-exam="3" type="button">
+          <span>Exam 3</span><small>Groups &amp; Deviance</small>
+        </button>
+        <button class="exam-tab" role="tab" aria-selected="false" data-exam="4" type="button">
+          <span>Exam 4</span><small>Inequality &amp; Identity</small>
+        </button>
+        <button class="exam-tab" role="tab" aria-selected="false" data-exam="5" type="button">
+          <span>Exam 5</span><small>Social Institutions</small>
+        </button>
+      </div>
+
+      <div class="session-controls">
+        <label class="select-wrap">
+          <span>Lesson focus</span>
+          <select id="lesson-select" aria-label="Lesson focus"></select>
+        </label>
+
+        <div class="mode-group" aria-label="Study mode">
+          <span class="field-label">Study mode</span>
+          <div class="segmented-control">
+            <button class="mode-button active" data-mode="flash" type="button">Flash cards</button>
+            <button class="mode-button" data-mode="recall" type="button">Recall</button>
+            <button class="mode-button" data-mode="practice" type="button">Practice exam</button>
+          </div>
+        </div>
+
+        <label class="toggle-row">
+          <input id="review-only" type="checkbox">
+          <span>Review difficult cards only</span>
+        </label>
+
+        <button id="shuffle-cards" class="secondary-button" type="button">Shuffle cards</button>
+      </div>
+    </section>
+
+    <section class="study-layout">
+      <aside class="session-summary" aria-labelledby="session-heading">
+        <p class="eyebrow">Current session</p>
+        <h2 id="session-heading">Exam 1</h2>
+        <p id="exam-description"></p>
+
+        <div class="progress-block">
+          <div class="progress-label"><span>Mastered</span><strong id="mastery-label">0%</strong></div>
+          <div class="progress-track" aria-hidden="true"><div id="mastery-bar" class="progress-fill"></div></div>
+        </div>
+
+        <dl class="stats-grid">
+          <div><dt>Cards</dt><dd id="card-count">0</dd></div>
+          <div><dt>Known</dt><dd id="known-count">0</dd></div>
+          <div><dt>Review</dt><dd id="review-count">0</dd></div>
+        </dl>
+
+        <div class="exam-map">
+          <h3>What this exam covers</h3>
+          <ul id="exam-topics"></ul>
+        </div>
+      </aside>
+
+      <section class="card-stage" aria-label="Study activity">
+        <div class="card-toolbar">
+          <p id="card-position" aria-live="polite">Card 1 of 1</p>
+          <p id="card-lesson"></p>
+        </div>
+
+        <article id="study-card" class="study-card" tabindex="0" aria-live="polite">
+          <div id="flash-mode" class="mode-view">
+            <div class="card-face card-front">
+              <p class="card-kicker">Concept</p>
+              <h2 id="flash-term"></h2>
+              <p class="flip-prompt">Click the card or press Space to reveal the explanation.</p>
+            </div>
+            <div class="card-face card-back" aria-hidden="true">
+              <p class="card-kicker">Explanation</p>
+              <p id="flash-definition" class="definition"></p>
+              <div class="example-box"><strong>Example</strong><span id="flash-example"></span></div>
+            </div>
+          </div>
+
+          <div id="recall-mode" class="mode-view hidden">
+            <p class="card-kicker">Name the concept</p>
+            <p id="recall-prompt" class="definition"></p>
+            <form id="recall-form">
+              <label for="recall-answer">Your answer</label>
+              <div class="answer-row">
+                <input id="recall-answer" autocomplete="off" spellcheck="false">
+                <button class="primary-button" type="submit">Check</button>
+              </div>
+            </form>
+            <div id="recall-feedback" class="feedback" aria-live="polite"></div>
+          </div>
+
+          <div id="practice-mode" class="mode-view hidden">
+            <p class="card-kicker">Practice exam question</p>
+            <p id="practice-prompt" class="practice-prompt"></p>
+            <div id="practice-options" class="practice-options"></div>
+            <div id="practice-feedback" class="feedback" aria-live="polite"></div>
+          </div>
+        </article>
+
+        <div id="empty-state" class="empty-state hidden">
+          <h2>No difficult cards yet</h2>
+          <p>Mark cards “Review Again” first, or turn off the difficult-cards filter.</p>
+          <button id="show-all-cards" class="primary-button" type="button">Show all cards</button>
+        </div>
+
+        <div class="card-actions">
+          <button id="previous-card" class="secondary-button" type="button" aria-label="Previous card">← Previous</button>
+          <div class="mastery-actions">
+            <button id="review-card" class="review-button" type="button">Review Again</button>
+            <button id="know-card" class="know-button" type="button">I Know This</button>
+          </div>
+          <button id="next-card" class="secondary-button" type="button" aria-label="Next card">Next →</button>
+        </div>
+        <p class="keyboard-help">Keyboard: ←/→ move · Space flips · 1–4 answer practice questions</p>
+      </section>
+    </section>
+
+    <section class="study-note">
+      <h2>How to use this tool</h2>
+      <p>Start with flash cards, switch to recall when the terms feel familiar, and finish with practice-exam questions. “I Know This” and “Review Again” are saved only in this browser.</p>
+      <p><strong>Course note:</strong> These cards follow the five-exam SOC 105 course map and key concepts from <em>OpenStax Introduction to Sociology 3e</em>. Your assigned lessons, instructor notes, study guides, and exam directions remain authoritative.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>SOC 105 · Introduction to Sociology · Educational study resource</p>
+  </footer>
+
+  <dialog id="reset-dialog">
+    <form method="dialog">
+      <h2>Reset study progress?</h2>
+      <p>This clears every “I Know This” and “Review Again” choice stored in this browser.</p>
+      <div class="dialog-actions">
+        <button value="cancel" class="secondary-button">Cancel</button>
+        <button value="confirm" class="danger-button">Reset progress</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="cards.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
