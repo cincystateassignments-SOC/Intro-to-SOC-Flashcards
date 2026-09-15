@@ -40,17 +40,7 @@ c(
 )
 ```
 
-The second value assigns the card to Exam 1–5. Keep every ID unique. Students automatically receive updated cards the next time they load the published site after you commit a revised `cards.js` file.
 
-## Course alignment
 
-The bank follows this five-exam structure:
 
-1. Foundations of Sociology and Sociological Research
-2. Culture, Socialization, and Social Interaction
-3. Groups, Formal Organizations, Deviance, Crime, and Social Control
-4. Social Stratification, Global Inequality, Gender, Sexuality, Race, and Ethnicity
-5. Government, Politics, Work, Economy, Education, Religion, Health, and Medicine
-
-Population, urbanization, environment, social movements, and social change are not presented as a sixth unit exam because the supplied SOC 105 assessment plan identifies five unit exams. They can be added later as a final-essay review bank if desired.
 
